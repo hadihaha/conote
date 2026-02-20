@@ -1,17 +1,39 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { TextInput } from 'react-native/types_generated/index'
+import { TextInput } from 'react-native'
 
-export default function note_pad() {
-    const [saves, setSaves] = useState([]) //make this into a log for the saves every save into an array at [0] its the current text on te page before on change then 1 is the the previous save and 2 is the one befor that we have 4 saves in total
+export default function NotePad() {
+    const [saves, setSaves] = useState(["", "", "", ""]) //make this into a log for the saves every save into an array at [0] its the current text on te page before on change then 1 is the the previous save and 2 is the one befor that we have 4 saves in total
+    const autoSave = (text) => {
+        const newSaves = saves.map((item, index) => {
+            if (index === 0) {
+                return text
+            }
+            return item
+        })
+
+        setSaves(newSaves)
+    }
     useEffect(() => {
 
-    }, [])// this update every interval of time it puts the current stuff in the context state and updates the save state and puts the text that was in the context state and puts it in [1] of the save state and shits everything. it also works when the users exits
+    }, [])// this updates every interval of time it puts the current stuff in the context state and updates the save state and puts the text that was in the context state and puts it in [1] of the save state and shits everything. it also works when the users exits
     return (
-        <View>
-            <TextInput ></TextInput>
+        <View style={styles.container}>
+            <TextInput style={styles.pad} multiline={true} value={saves[0]}
+                onChange={(text) => autoSave(text)} textAlignVertical='top' />
+
         </View>
+
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    pad: {
+        width: '100%', height: '100%', backgroundColor: '#ffffff', marginTop: '30', marginHorizontal: 5
+    }, container: {
+        width: '100%', height: '100%',
+    }
+
+})
+
+//when you press a tab that state is gonna get put in [0] of the save state and everything is going to be reset 

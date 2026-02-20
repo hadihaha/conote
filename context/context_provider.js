@@ -5,7 +5,7 @@ export default function context_provider({ children }) {
     const [note, setNote] = useState(
         [{
             title: '',
-            text: '',
+            text: 'hhhhhh',
             id: ''
 
         }]
