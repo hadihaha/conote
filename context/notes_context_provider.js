@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
-const Context = createContext()
+export const NoteContext = createContext()
 
-export default function context_provider({ children }) {
+export default function NotesContextProvider({ children }) {
     const [note, setNote] = useState(
         [{
             title: '',
@@ -15,6 +15,6 @@ export default function context_provider({ children }) {
         setNote,
     }
     return (
-        <Context.Provider value={value}>{children}</Context.Provider>
+        <NoteContext.Provider value={value}>{children}</NoteContext.Provider>
     )
 }

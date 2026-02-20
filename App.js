@@ -1,10 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View } from 'react-native';
 import NotePad from './component/note_pad';
+import NotesContextProvider from './context/notes_context_provider';
 export default function App() {
   return (
+
     <View style={styles.container}>
-      <NotePad />
+      <NotesContextProvider> <NotePad /></NotesContextProvider>
+
     </View>
   );
 }
