@@ -1,13 +1,25 @@
-import { View, Text } from 'react-native'
+
 import React from 'react'
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import NoteEditor from './screens/note_editor';
+import NotesContextProvider from '../context/notes_context_provider';
 const Stack = createNativeStackNavigator()
-export default function navigator() {
+export default function Navigator() {
     return (
-        <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen>
+        <NotesContextProvider>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Home">
 
-            </Stack.Screen></Stack.Navigator >
+                    <Stack.Screen name={"Home"} component={NoteEditor} />
+
+
+
+
+
+                </Stack.Navigator >
+            </NavigationContainer>
+
+        </NotesContextProvider>
     )
 }

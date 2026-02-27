@@ -1,29 +1,43 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TextInput } from 'react-native'
-import { useContext } from 'react'
-import NotesContext from '../context/notes_context_provider'
-export default function NotePad() {
-    const { notes, setnotes } = useContext(NotesContext)
-    const [saves, setSaves] = useState(["", "", "", ""]) //make this into a log for the saves every save into an array at [0] its the current text on te page before on change then 1 is the the previous save and 2 is the one befor that we have 4 saves in total
-    const autoSave = (text) => {
-        const newSaves = saves.map((item, index) => {
-            if (index === 0) {
-                return text
-            }
-            return item
+
+export default function NotePad({ notes, setnotes, saves, setSaves, currentSave, setCurrentSave }) {
+
+    const autoSave = (newtext) => {
+        setSaves(prev => {
+            const newSaves = [newtext, ...prev]
+            return newSaves.slice(0, 5)
         })
 
-        setSaves(newSaves)
+        setnotes(prevnotes => prevnotes.map((note) => note.id == 1 ? { ...note, text: newtext } : note))
     }
-    useEffect(() => { setSaves([notes.text, "", "", ""]) }, []) // puts the contents of the notes in the saves on mount and delete all the saves{needs update once tabs are added}
-    useEffect(() => {
 
-    }, [])// this updates every interval of time it puts the current stuff in the context state and updates the save state and puts the text that was in the context state and puts it in [1] of the save state and shits everything. it also works when the users exits
+
+    useEffect(() => {
+        setCurrentSave(notes[0].text)
+        setSaves(notes[0].saves)
+    }, []) // puts the contents of the notes in the saves on mount and delete all the saves{needs update once tabs are added}
+
+    useEffect(() => {
+        const saveInterval = setTimeout(() => {
+            if (currentSave.length > 0) {
+                autoSave(currentSave)
+                console.log("saved", notes, saves)
+
+            }
+        }, 2000);
+        return () => {
+            console.log("reset", notes)
+            clearTimeout(saveInterval)
+        }
+
+    }, [currentSave])// this updates the saves every 2 seconds of none typing if anything is typed the timer resests
+
     return (
         <View style={styles.container}>
-            <TextInput style={styles.pad} multiline={true} value={saves[0]}
-                onChange={(text) => autoSave(text)} textAlignVertical='top' />
+            <TextInput style={styles.pad} multiline={true} value={currentSave || ""}
+                onChangeText={setCurrentSave} textAlignVertical='top' />
 
         </View>
 
@@ -38,5 +52,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-//when you press a tab that state is gonna get put in [0] of the save state and everything is going to be reset 
