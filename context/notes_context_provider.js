@@ -5,8 +5,8 @@ export default function NotesContextProvider({ children }) {
     const [notes, setNotes] = useState(
         [{
             title: '',
-            text: 'hhhhhh',
-            saves: ["", ""],
+            text: '',
+            saves: [],
             id: 1
 
         }]
