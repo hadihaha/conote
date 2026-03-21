@@ -27,28 +27,23 @@ export default function NotePad({ notes, setnotes, saves, setSaves, currentSave,
 
 
     useEffect(() => {
-        setCurrentSave({ text: notes[0].text, index: 0 })
-        setSaves(notes[0].saves)
-    }, []) // puts the contents of the notes in the saves on mount and delete all the saves{needs update once tabs are added}
-
-    useEffect(() => {
         const saveInterval = setTimeout(() => {
-            if (currentSave.index === 0 && currentSave.text.length > 0) {
+            if (currentSave.index === 0 && currentSave.text?.length > 0) {
                 autoSave(currentSave)
-                console.log("saved", notes, saves)
+                console.log("saved", saves)
 
             }
         }, 2000);
         return () => {
-            console.log("reset", notes)
+            console.log("reset", saves)
             clearTimeout(saveInterval)
         }
 
-    }, [currentSave])// this updates the saves every 2 seconds of none typing if anything is typed the timer resests
+    }, [currentSave.text])// this updates the saves every 2 seconds of none typing if anything is typed the timer resests
 
     return (
         <View style={styles.container}>
-            <TextInput style={styles.pad} multiline={true} value={currentSave || ""}
+            <TextInput style={styles.pad} multiline={true} value={currentSave.text || ""}
                 onChangeText={(ntext) => setCurrentSave({ text: ntext, index: 0 })} textAlignVertical='top' />
 
         </View>

@@ -7,34 +7,42 @@ export default function Undo({ saves, setSaves, currentSave, setCurrentSave, cur
     const past = currentSave.index < 5 && saves.length - 1 > 0
 
     //these two functions update the index of the current save and also saves automatically the current text to the 0 of saves without waiting for 2 secs
+
     const forward = () => {
         const newIndex = currentindex - 1
         setCurrentIndex(newIndex)
-        setSaves(prev => {
-            const newSaves = [newIndex, ...prev]
-            return newSaves.slice(0, 5)
-        })
-        setCurrentSave({ text: saves[newIndex], index: currentindex })
+
+        setCurrentSave({ text: saves[newIndex].text, index: newIndex })
+        console.log("forward", currentSave, saves)
 
 
     }
     const backward = () => {
         const newIndex = currentindex + 1
         setCurrentIndex(newIndex)
-        setSaves(prev => {
-            const newSaves = [newIndex, ...prev]
-            return newSaves.slice(0, 5)
-        })
-        setCurrentSave({ text: saves[newIndex], index: currentindex })
 
+        setCurrentSave({ text: saves[newIndex].text, index: newIndex })
+        console.log("back", currentSave, saves)
 
 
     }
     return (
         <View style={styles.container}>
-            {future ? <Pressable hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }} onPress={forward}><Ionicons name='return-down-back-outline' color='black' size={35} /></Pressable> : <Ionicons name='return-down-back-outline' color='grey' size={35} />}
+            <Pressable disabled={!future}
+                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+                onPress={forward}>
+                <Ionicons name='return-down-back-outline'
+                    color={future ? 'black' : 'gray'}
+                    size={35} />
+            </Pressable>
 
-            {past ? <Pressable hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }} onPress={backward}><Ionicons name='return-up-forward-outline' color='black' size={35} /></Pressable> : <Ionicons name='return-up-forward-outline' color='grey' size={35} />}
+            <Pressable disabled={!past}
+                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+                onPress={backward}>
+                <Ionicons name='return-up-forward-outline'
+                    color={past ? 'black' : 'gray'}
+                    size={35} />
+            </Pressable>
         </View>
     )
 }
