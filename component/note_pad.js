@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { TextInput } from 'react-native'
 
 export default function NotePad({ notes, setnotes, saves, setSaves, currentSave, setCurrentSave, currentIndex, setCurrentIndex }) {
-    //fix logic with tis auto save function. the indexing doesnt work and  the else doesnt work
+
     const autoSave = (newtext) => {
         //saves normally if you havent changed histor( no redo undo)
         if (currentSave.index === 0) {
