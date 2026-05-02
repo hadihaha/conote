@@ -28,8 +28,7 @@ export default function NotePad({ notes, setnotes, saves, setSaves, currentSave,
 
     useEffect(() => {
         const saveInterval = setTimeout(() => {
-            if (currentSave.index === 0 && currentSave.text?.length > 0) {
-                autoSave(currentSave)
+
             if (currentSave.index === 0 && currentSave.text !== saves[currentIndex]) {
                 autoSave(currentSave.text)
                 console.log("saved", saves)
