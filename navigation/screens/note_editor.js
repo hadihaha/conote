@@ -6,11 +6,14 @@ import Undo from '../../component/undo';
 import { NoteContext } from '../../context/notes_context_provider';
 import { useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native/types_generated/Libraries/Animated/AnimatedExports';
+import { TextInput } from 'react-native/types_generated/index';
 export default function NoteEditor() {
     const { notes, setNotes, } = useContext(NoteContext)
-    const [saves, setSaves] = useState([]) //contains five versions of the notes max
-    const [currentSave, setCurrentSave] = useState({ text: "", index: 0 })
+    const [saves, setSaves] = useState(notes[0].saves) //contains five versions of the note max
+    const [currentSave, setCurrentSave] = useState({ text: notes[0].text, index: 0 })
     const [currentIndex, setCurrentIndex] = useState(0)
+
     //auto save on exit off screen
 
     console.log(saves.length)
@@ -37,7 +40,13 @@ export default function NoteEditor() {
                     currentindex={currentIndex}
                     setCurrentIndex={setCurrentIndex} />
             </View>
+            <View style={styles.titelCard}>
 
+                <ScrollView horizontal={true}>
+                    <TextInput onChange={(title) => setNotes(prevnotes => prevnotes.map((note) => note.id == 1 ? { ...note, title: title } : note))}></TextInput>
+                </ScrollView>
+
+            </View>
             <NotePad notes={notes}
                 setnotes={setNotes}
                 saves={saves}
@@ -65,5 +74,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 'auto'
 
+    }, titelCard: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%'
     },
+
 });

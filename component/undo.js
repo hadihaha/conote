@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Undo({ saves, setSaves, currentSave, setCurrentSave, currentindex, setCurrentIndex }) {
     const future = currentSave.index > 0 && saves.length - 1 > 0
-    const past = currentSave.index < 5 && saves.length - 1 > 0
+    const past = currentSave.index < saves.length - 1 && saves.length - 1 > 0
 
     //these two functions update the index of the current save and also saves automatically the current text to the 0 of saves without waiting for 2 secs
 
@@ -12,8 +12,8 @@ export default function Undo({ saves, setSaves, currentSave, setCurrentSave, cur
         const newIndex = currentindex - 1
         setCurrentIndex(newIndex)
 
-        setCurrentSave({ text: saves[newIndex].text, index: newIndex })
-        console.log("forward", currentSave, saves)
+        setCurrentSave({ text: saves[newIndex], index: newIndex })
+        console.log("forward", currentSave, saves, currentindex, saves[currentindex])
 
 
     }
@@ -21,8 +21,8 @@ export default function Undo({ saves, setSaves, currentSave, setCurrentSave, cur
         const newIndex = currentindex + 1
         setCurrentIndex(newIndex)
 
-        setCurrentSave({ text: saves[newIndex].text, index: newIndex })
-        console.log("back", currentSave, saves)
+        setCurrentSave({ text: saves[newIndex], index: newIndex })
+        console.log("back", currentSave, saves, currentindex, saves[currentindex])
 
 
     }

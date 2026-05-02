@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { TextInput } from 'react-native'
 
 export default function NotePad({ notes, setnotes, saves, setSaves, currentSave, setCurrentSave, currentIndex, setCurrentIndex }) {
-
     const autoSave = (newtext) => {
         //saves normally if you havent changed histor( no redo undo)
         if (currentSave.index === 0) {
@@ -30,6 +29,8 @@ export default function NotePad({ notes, setnotes, saves, setSaves, currentSave,
         const saveInterval = setTimeout(() => {
             if (currentSave.index === 0 && currentSave.text?.length > 0) {
                 autoSave(currentSave)
+            if (currentSave.index === 0 && currentSave.text !== saves[currentIndex]) {
+                autoSave(currentSave.text)
                 console.log("saved", saves)
 
             }
