@@ -6,8 +6,7 @@ import Undo from '../../component/undo';
 import { NoteContext } from '../../context/notes_context_provider';
 import { useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native/types_generated/Libraries/Animated/AnimatedExports';
-import { TextInput } from 'react-native/types_generated/index';
+import { ScrollView, TextInput } from 'react-native';
 export default function NoteEditor() {
     const { notes, setNotes, } = useContext(NoteContext)
     const [saves, setSaves] = useState(notes[0].saves) //contains five versions of the note max
